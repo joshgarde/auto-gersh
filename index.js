@@ -3,9 +3,6 @@ const got = require('got')
 const cheerio = require('cheerio')
 const moment = require('moment')
 
-const username = process.env.USERNAME
-const password = process.env.PASSWORD
-
 async function main() {
   let response = await got('https://www.cpp.edu/~dagershman/cs2600-001/', {
     resolveBodyOnly: true,
