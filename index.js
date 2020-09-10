@@ -21,25 +21,17 @@ async function main() {
   for (let i = 0; i < links.length; i++) {
     let link = $(links[i]);
     let format = /^Day [0-9]{1,2} - .*, (.*, 2020)/g.exec(link.text());
+    if (!format || format.length !== 2) continue; // Does not match the date format
 
-    if (format && format.length === 2) {
-      let date = moment(format[1], 'MMMM D, YYYY');
+    let date = moment(format[1], 'MMMM D, YYYY');
+    if (!date.isSame(today)) continue; // Not today
 
-      if (date.isSame(today)) {
-        let sublinks = link.next().find('a');
-        // Locate the Zoom Meeting link
-        for (let j = 0; j < sublinks.length; j++) {
-          let sublink = $(sublinks[j]);
-
-          if (sublink.text().startsWith('Zoom ')) {
-            let meetingInfo = $(`#text-${sublink.attr('href').substring(1)}`).text().trim();
-            console.log(meetingInfo);
-            break;
-          }
-        }
-        break;
-      }
-    }
+    let rawSectionText = $(`#outline-container-${link.attr('href').substring(1)}`).text().trim();
+    let zoomId = /Meeting ID: ([0-9]* [0-9]* [0-9]*)/i.exec(rawSectionText)[1];
+    let zoomPassword = /Pass.*: ([0-9]*)/i.exec(rawSectionText)[1];
+    console.log(`Meeting ID: ${zoomId}`);
+    console.log(`Passcode: ${zoomPassword}`);
+    console.log(`https://cpp.zoom.us/j/${zoomId.replace(/ /g, '')}`)
   }
 }
 
