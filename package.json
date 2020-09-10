@@ -1,0 +1,17 @@
+{
+  "name": "auto-gershed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joshua Garde",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "dotenv": "^8.2.0",
+    "got": "^11.6.1",
+    "moment": "^2.27.0"
+  }
+}
