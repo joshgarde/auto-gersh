@@ -10,3 +10,8 @@ Example:
 USERNAME=jbdoe
 PASSWORD=password123
 ```
+
+## How to run
+```
+npm run example
+```

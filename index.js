@@ -1,4 +1,3 @@
-require('dotenv').config()
 const got = require('got')
 const cheerio = require('cheerio')
 const moment = require('moment')
