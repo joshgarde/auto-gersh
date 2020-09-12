@@ -13,5 +13,5 @@ PASSWORD=password123
 
 ## How to run
 ```
-npm run example
+npm start
 ```
