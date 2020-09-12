@@ -1,13 +1,12 @@
-require('dotenv').config()
 const got = require('got')
 const cheerio = require('cheerio')
 const moment = require('moment')
 
-async function main() {
+async function getTodaysZoomInfo(username, password) {
   let response = await got('https://www.cpp.edu/~dagershman/cs2600-001/', {
     resolveBodyOnly: true,
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD
+    username: username,
+    password: password
   });
 
   let $ = cheerio.load(response);
@@ -23,13 +22,21 @@ async function main() {
     let date = moment(format[1], 'MMMM D, YYYY');
     if (!date.isSame(today)) continue; // Not today
 
-    let rawSectionText = $(`#outline-container-${link.attr('href').substring(1)}`).text().trim();
+    let rawSectionText = $(`#outline-container-${link.attr('href').substring(1)}`).text().trim();	 
     let zoomId = /Meeting ID: ([0-9]* [0-9]* [0-9]*)/i.exec(rawSectionText)[1];
     let zoomPassword = /Pass.*: ([0-9]*)/i.exec(rawSectionText)[1];
-    console.log(`Meeting ID: ${zoomId}`);
-    console.log(`Passcode: ${zoomPassword}`);
-    console.log(`https://cpp.zoom.us/j/${zoomId.replace(/ /g, '')}`)
+    let zoomUrl = `https://cpp.zoom.us/j/${zoomId.replace(/ /g, '')}`;
+
+    return ({
+    	sucessful: true,
+    	id: zoomId,
+    	password: zoomPassword,
+    	url: zoomUrl
+    });
   }
+  return {
+    sucessful: false
+  };
 }
 
-main().catch(console.log)
+module.exports = getTodaysZoomInfo;
