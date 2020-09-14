@@ -28,14 +28,14 @@ async function getTodaysZoomInfo(username, password) {
     let zoomUrl = `https://cpp.zoom.us/j/${zoomId.replace(/ /g, '')}`;
 
     return ({
-    	sucessful: true,
+    	successful: true,
     	id: zoomId,
     	password: zoomPassword,
     	url: zoomUrl
     });
   }
   return {
-    sucessful: false
+    successful: false
   };
 }
 
